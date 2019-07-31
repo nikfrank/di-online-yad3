@@ -21,34 +21,81 @@ const listings = [
   },
 ];
 
-listings.forEach(listing => {
-  const li = document.createElement('li');
+const render = ()=> {
+  document.querySelector('ul').innerHTML = '';
 
-  const img = document.createElement('img');
-  img.src = listing.image;
+  listings.forEach(listing => {
+    const li = document.createElement('li');
 
-  const container = document.createElement('div');
-  container.className = 'listing-container';
+    const img = document.createElement('img');
+    img.src = listing.image;
 
-  const date = document.createElement('span');
-  date.innerHTML = listing.createdAt;
+    const container = document.createElement('div');
+    container.className = 'listing-container';
 
-  const title = document.createElement('a');
-  title.innerHTML = listing.title;
-  title.href = '#';
+    const date = document.createElement('span');
+    date.innerHTML = listing.createdAt;
 
-  const priceContainer = document.createElement('div');
-  const price = document.createElement('span');
-  price.innerHTML = listing.price;
+    const title = document.createElement('a');
+    title.innerHTML = listing.title;
+    title.href = '#';
 
-  priceContainer.appendChild(price);
+    const priceContainer = document.createElement('div');
+    const price = document.createElement('span');
+    price.innerHTML = listing.price;
 
-  li.appendChild(img);
-  container.appendChild(date);
-  container.appendChild(title);
-  container.appendChild(priceContainer);
+    priceContainer.appendChild(price);
 
-  li.appendChild(container);
+    li.appendChild(img);
+    container.appendChild(date);
+    container.appendChild(title);
+    container.appendChild(priceContainer);
 
-  document.querySelector('ul').appendChild(li);
-});
+    li.appendChild(container);
+
+    document.querySelector('ul').appendChild(li);
+  });
+};
+
+render();
+
+function addListing(){
+  const newTitle = document.querySelector('.add-listing-form input.title').value;
+
+  const newPrice = document.querySelector('.add-listing-form input.price').value;
+
+  const newImgUrl = document.querySelector('.add-listing-form input.img-url').value;
+
+  if( !newTitle || !newPrice || !newImgUrl ) return;
+
+  const newCreatedAt = (new Date).toString().slice(4, 10);
+
+  const newListing = {
+    title: newTitle,
+    price: newPrice,
+    image: newImgUrl,
+    createdAt: newCreatedAt,
+  };
+
+  listings.push( newListing );
+
+  render();
+
+  document.querySelectorAll('.add-listing-form input').forEach(input=>{
+    input.value = '';
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

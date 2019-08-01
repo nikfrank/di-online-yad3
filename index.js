@@ -21,10 +21,19 @@ const listings = [
   },
 ];
 
+let searchText = '';
+
 const render = ()=> {
   document.querySelector('ul').innerHTML = '';
 
-  listings.forEach(listing => {
+  listings
+  .filter(listing => {
+    if( !searchText || (
+      listing.title.toLowerCase().includes(searchText.toLowerCase())
+    )) return true;
+    else return false;
+  })
+  .forEach(listing => {
     const li = document.createElement('li');
 
     const img = document.createElement('img');
@@ -86,9 +95,16 @@ function addListing(){
   });
 }
 
+function search(){
+  const nextSearchText = document.querySelector('input.search').value;
+  searchText = nextSearchText;
 
+  render();
+}
 
-
+//function searchKeypress(event){
+//  if( event.keyCode === 13 ) search();
+//}
 
 
 
